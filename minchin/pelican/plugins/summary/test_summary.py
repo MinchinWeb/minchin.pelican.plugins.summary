@@ -2,17 +2,18 @@
 
 import unittest
 
+import pelican.settings
 from jinja2.utils import generate_lorem_ipsum
+from pelican.contents import Page
+
+import summary
 
 # generate one paragraph, enclosed with <p>
 TEST_CONTENT = str(generate_lorem_ipsum(n=1))
 TEST_SUMMARY = generate_lorem_ipsum(n=1, html=False)
 
 
-from pelican.contents import Page
-import pelican.settings
 
-import summary
 
 class TestSummary(unittest.TestCase):
     def setUp(self):
