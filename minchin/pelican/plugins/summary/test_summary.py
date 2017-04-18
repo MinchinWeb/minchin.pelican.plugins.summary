@@ -13,8 +13,6 @@ TEST_CONTENT = str(generate_lorem_ipsum(n=1))
 TEST_SUMMARY = generate_lorem_ipsum(n=1, html=False)
 
 
-
-
 class TestSummary(unittest.TestCase):
     def setUp(self):
         super(TestSummary, self).setUp()
