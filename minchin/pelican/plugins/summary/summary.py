@@ -85,7 +85,7 @@ def extract_summary(instance):
     summary = re.sub(r"</div>", "", summary)
 
     instance._content = content
-    instance._summary = summary
+    instance.metadata["summary"] = summary
     instance.has_summary = True
 
 
