@@ -12,6 +12,10 @@ the body of your articles.
     :target: https://pypi.python.org/pypi/minchin.pelican.plugins.summary/
     :alt: PyPI version number
 
+.. image:: https://img.shields.io/badge/-Changelog-success
+   :target: https://github.com/MinchinWeb/minchin.pelican.plugins.summary/blob/master/CHANGELOG.rst
+   :alt: Changelog
+
 .. image:: https://img.shields.io/pypi/pyversions/minchin.pelican.plugins.summary?style=flat
     :target: https://pypi.python.org/pypi/minchin.pelican.plugins.summary/
     :alt: Supported Python version
