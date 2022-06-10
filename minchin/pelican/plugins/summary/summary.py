@@ -8,15 +8,47 @@ body of your articles.
 
 from __future__ import unicode_literals
 
+import logging
 import re
 
+import semantic_version
+
+from pelican import __version__ as pelican_version
 from pelican import signals
 from pelican.generators import (ArticlesGenerator, PagesGenerator,
                                 StaticGenerator)
 
 
+LOG_PREFIX = "[AutoLoader]"
+
+logger = logging.getLogger(__name__)
+
+
+def pelican_summary_as_metadata():
+    """
+    Determine if the installed version of Pelican stores the summary in the
+    metadata table.
+
+    In short, the Pelican version must be greater than or equal to 4.0.0.
+
+    Pelican switched from `instance._summary` to `instance.metadata["summary"]`
+    in preparation for the release of Pelican 4. (Actual commit is 06fd9b dated
+    2018-02-09).
+
+    Return:
+        bool: if namespace plugins are supported
+    """
+
+    pelican_semver = semantic_version.Version(pelican_version)
+    if pelican_semver.major >= 4:
+        return True
+    else:
+        return False
+
+
 def initialized(pelican):
     from pelican.settings import DEFAULT_CONFIG
+
     DEFAULT_CONFIG.setdefault('SUMMARY_BEGIN_MARKER',
                               '<!-- PELICAN_BEGIN_SUMMARY -->')
     DEFAULT_CONFIG.setdefault('SUMMARY_END_MARKER',
@@ -29,10 +61,13 @@ def initialized(pelican):
                                     '<!-- PELICAN_END_SUMMARY -->')
         pelican.settings.setdefault('SUMMARY_USE_FIRST_PARAGRAPH', False)
 
+    logger.debug("%s initalized" % LOG_PREFIX)
+
+
 def extract_summary(instance):
     # if summary is already specified, use it
     # if there is no content, there's nothing to do
-    if hasattr(instance, '_summary'):
+    if instance.metadata["summary"] or hasattr(instance, '_summary'):
         instance.has_summary = True
         return
 
@@ -85,7 +120,10 @@ def extract_summary(instance):
     summary = re.sub(r"</div>", "", summary)
 
     instance._content = content
-    instance.metadata["summary"] = summary
+    if pelican_summary_as_metadata():
+        instance.metadata["summary"] = summary
+    else:
+        instance._summary = summary
     instance.has_summary = True
 
 
