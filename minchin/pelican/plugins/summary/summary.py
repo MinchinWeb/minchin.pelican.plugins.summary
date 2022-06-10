@@ -47,17 +47,17 @@ def pelican_summary_as_metadata():
 def initialized(pelican):
     from pelican.settings import DEFAULT_CONFIG
 
-    DEFAULT_CONFIG.setdefault('SUMMARY_BEGIN_MARKER',
-                              '<!-- PELICAN_BEGIN_SUMMARY -->')
-    DEFAULT_CONFIG.setdefault('SUMMARY_END_MARKER',
-                              '<!-- PELICAN_END_SUMMARY -->')
-    DEFAULT_CONFIG.setdefault('SUMMARY_USE_FIRST_PARAGRAPH', False)
+    DEFAULT_CONFIG.setdefault("SUMMARY_BEGIN_MARKER", "<!-- PELICAN_BEGIN_SUMMARY -->")
+    DEFAULT_CONFIG.setdefault("SUMMARY_END_MARKER", "<!-- PELICAN_END_SUMMARY -->")
+    DEFAULT_CONFIG.setdefault("SUMMARY_USE_FIRST_PARAGRAPH", False)
     if pelican:
-        pelican.settings.setdefault('SUMMARY_BEGIN_MARKER',
-                                    '<!-- PELICAN_BEGIN_SUMMARY -->')
-        pelican.settings.setdefault('SUMMARY_END_MARKER',
-                                    '<!-- PELICAN_END_SUMMARY -->')
-        pelican.settings.setdefault('SUMMARY_USE_FIRST_PARAGRAPH', False)
+        pelican.settings.setdefault(
+            "SUMMARY_BEGIN_MARKER", "<!-- PELICAN_BEGIN_SUMMARY -->"
+        )
+        pelican.settings.setdefault(
+            "SUMMARY_END_MARKER", "<!-- PELICAN_END_SUMMARY -->"
+        )
+        pelican.settings.setdefault("SUMMARY_USE_FIRST_PARAGRAPH", False)
 
     logger.debug("%s initalized" % LOG_PREFIX)
 
@@ -65,7 +65,7 @@ def initialized(pelican):
 def extract_summary(instance):
     # if summary is already specified, use it
     # if there is no content, there's nothing to do
-    if instance.metadata["summary"] or hasattr(instance, '_summary'):
+    if instance.metadata["summary"] or hasattr(instance, "_summary"):
         instance.has_summary = True
         return
 
@@ -73,9 +73,9 @@ def extract_summary(instance):
         instance.has_summary = False
         return
 
-    begin_marker = instance.settings['SUMMARY_BEGIN_MARKER']
-    end_marker   = instance.settings['SUMMARY_END_MARKER']
-    use_first_paragraph = instance.settings['SUMMARY_USE_FIRST_PARAGRAPH']
+    begin_marker = instance.settings["SUMMARY_BEGIN_MARKER"]
+    end_marker = instance.settings["SUMMARY_END_MARKER"]
+    use_first_paragraph = instance.settings["SUMMARY_USE_FIRST_PARAGRAPH"]
     remove_markers = True
 
     content = instance._content
@@ -87,7 +87,7 @@ def extract_summary(instance):
         end_summary = content.find(end_marker)
 
     if begin_summary == -1 and end_summary == -1 and use_first_paragraph:
-        begin_marker, end_marker = '<p>', '</p>'
+        begin_marker, end_marker = "<p>", "</p>"
         remove_markers = False
         begin_summary = content.find(begin_marker)
         end_summary = content.find(end_marker)
@@ -110,9 +110,9 @@ def extract_summary(instance):
     if remove_markers:
         # remove the markers from the content
         if begin_summary:
-            content = content.replace(begin_marker, '', 1)
+            content = content.replace(begin_marker, "", 1)
         if end_summary:
-            content = content.replace(end_marker, '', 1)
+            content = content.replace(end_marker, "", 1)
 
     summary = re.sub(r"<div.*>", "", summary)
     summary = re.sub(r"</div>", "", summary)
