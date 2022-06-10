@@ -6,8 +6,6 @@ This plugin allows easy, variable length summaries directly embedded into the
 body of your articles.
 """
 
-from __future__ import unicode_literals
-
 import logging
 import re
 
@@ -15,7 +13,7 @@ import semantic_version
 
 from pelican import __version__ as pelican_version
 from pelican import signals
-from pelican.generators import ArticlesGenerator, PagesGenerator, StaticGenerator
+from pelican.generators import ArticlesGenerator, PagesGenerator
 
 LOG_PREFIX = "[AutoLoader]"
 
