@@ -15,9 +15,7 @@ import semantic_version
 
 from pelican import __version__ as pelican_version
 from pelican import signals
-from pelican.generators import (ArticlesGenerator, PagesGenerator,
-                                StaticGenerator)
-
+from pelican.generators import ArticlesGenerator, PagesGenerator, StaticGenerator
 
 LOG_PREFIX = "[AutoLoader]"
 
