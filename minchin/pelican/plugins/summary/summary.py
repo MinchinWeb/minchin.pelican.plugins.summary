@@ -63,7 +63,9 @@ def initialized(pelican):
 def extract_summary(instance):
     # if summary is already specified, use it
     # if there is no content, there's nothing to do
-    if instance.metadata["summary"] or hasattr(instance, "_summary"):
+    if (
+        "summary" in instance.metadata.keys() and instance.metadata["summary"]
+    ) or hasattr(instance, "_summary"):
         instance.has_summary = True
         return
 

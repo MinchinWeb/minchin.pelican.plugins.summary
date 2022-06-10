@@ -46,6 +46,7 @@ PACKAGES     = setuptools.find_packages()
 INSTALL_REQUIRES = [
     "pelican",
     "semantic_version",
+    "minchin.pelican.plugins.autoloader",
 ]
 
 EXTRA_REQUIRES = {

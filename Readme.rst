@@ -39,16 +39,19 @@ will also install the required dependencies automatically.
 
   pip install minchin.pelican.plugins.summary
 
-Then, in your ``pelicanconf.py`` file, add ``Summary`` to your list of
-plugins:
+If you are using Pelican 4.5, it should automatically be activated (through my
+AutoLoader plugin). 
+
+If you are using an earlier version of Pelican or autoloading isn't working,
+then in your ``pelicanconf.py`` file, add ``Summary`` to your list of plugins:
 
 .. code-block:: python
 
   PLUGINS = [
-              # ...
-              'minchin.pelican.plugins.summary',
-              # ...
-            ]
+      # others...
+      'minchin.pelican.plugins.summary',
+      # ...
+  ]
 
 You may also need to configure the summary start and end markers (see
 Configuration below).
@@ -57,13 +60,14 @@ Configuration below).
 Requirements
 ============
 
-``Summary`` depends on (and is really only useful with) Pelican. This can
-be manually installed with pip:
+``Summary`` depends on (and is really only useful with) Pelican; it also
+depends on ``semantic-version`` and ``minchin.pelican.plugins.autoloader``.
+These can be manually installed with pip (but are automatically installed if
+the plugin is installed with pip):
 
 .. code-block:: sh
 
-   pip install pelican
-
+   pip install pelican semantic-version minchin.pelican.plugins.autoloader
 
 
 Configuration and Usage
@@ -105,7 +109,7 @@ True for articles with an explicitly-defined summary, and False otherwise.
 Your templates can use this e.g. to add a link to the full text at the end
 of the summary.
 
-reST example
+ReST example
 ~~~~~~~~~~~~
 
 Inserting the markers into a reStructuredText document makes use of the
@@ -127,11 +131,33 @@ equivalent of the above Markdown example looks like this::
 
     and this content occurs after the summary.
 
+
+Pelican 3 Support
+=================
+
+The plugin also includes support for Pelican 3, however general support for
+Pelican 3 is somewhat limited. In particular, Python 3.9 or earlier is needed,
+and the most recent version dependencies include ``pelican==3.7.1``,
+``jinja2==2.11.3``, and ``markupsafe==1.1.1``.
+
+For extra clarity, the plugins to designed to support Pelican 4 as well.
+
+
+Test Suite
+==========
+
+There is an included test suite, available at
+``minchin\pelican\plugins\summary\test_summary.py``. The plugin itself doesn't
+need to be installed for the suite to run, but the plugin dependencies do need
+to be installed.
+
+
 Credits
 =======
 
 Original plugin from the `Pelican-Plugins repo
 <https://github.com/getpelican/pelican-plugins>`_.
+
 
 License
 =======
