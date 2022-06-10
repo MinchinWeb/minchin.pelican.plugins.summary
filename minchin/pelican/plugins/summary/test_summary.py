@@ -7,7 +7,10 @@ from jinja2.utils import generate_lorem_ipsum
 from pelican.contents import Page
 import pelican.settings
 
-from minchin.pelican.plugins.summary import summary
+try:
+    from . import summary
+except ImportError:
+    from minchin.pelican.plugins.summary import summary
 
 # generate one paragraph, enclosed with <p>
 TEST_CONTENT = str(generate_lorem_ipsum(n=1))
