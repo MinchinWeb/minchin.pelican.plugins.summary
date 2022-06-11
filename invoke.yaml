@@ -6,10 +6,13 @@ releaser:
   source: minchin
   changelog: CHANGELOG.rst
   version: minchin\pelican\plugins\summary\__init__.py
-  test_command: none
+  test_command: python .\minchin\pelican\plugins\summary\test_summary.py
   version_bump: none
   extra_packages:
     test:
       - pelican
+      - setuptools
+      - wheel
+      - semantic-version
     pypi:
       - python-dateutil
