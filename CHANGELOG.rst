@@ -3,6 +3,7 @@ Image Process Changelog
 
 This Changelog is for ``minchin.pelican.plugins.summary``.
 
+- :release`1.2.1 <2023-08-09>`
 - :bug:`-` blacklist ``autoloader`` v1.2.0
 - :release`1.2.0 <2022-06-10>`
 - :feature:`-` set up for autoloading
