@@ -15,12 +15,12 @@ from pelican import __version__ as pelican_version
 from pelican import signals
 from pelican.generators import ArticlesGenerator, PagesGenerator
 
-LOG_PREFIX = "[AutoLoader]"
+LOG_PREFIX = "[Summary]"
 
 logger = logging.getLogger(__name__)
 
 
-def pelican_summary_as_metadata():
+def _pelican_summary_as_metadata():
     """
     Determine if the installed version of Pelican stores the summary in the
     metadata table.
@@ -32,7 +32,7 @@ def pelican_summary_as_metadata():
     2018-02-09).
 
     Return:
-        bool: if namespace plugins are supported
+        bool: if summary is stored in the metadata table.
     """
 
     pelican_semver = semantic_version.Version(pelican_version)
@@ -118,7 +118,7 @@ def extract_summary(instance):
     summary = re.sub(r"</div>", "", summary)
 
     instance._content = content
-    if pelican_summary_as_metadata():
+    if _pelican_summary_as_metadata():
         instance.metadata["summary"] = summary
     else:
         instance._summary = summary

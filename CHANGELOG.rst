@@ -1,4 +1,4 @@
-Image Process Changelog
+Summary Changelog
 =======================
 
 This Changelog is for ``minchin.pelican.plugins.summary``.
