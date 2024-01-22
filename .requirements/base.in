@@ -1,0 +1,3 @@
+pelican
+semantic_version
+minchin.pelican.plugins.autoloader != 1.2.0
