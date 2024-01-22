@@ -6,4 +6,17 @@ __email__ = "w_minchin@hotmail.com"
 __url__ = "https://github.com/MinchinWeb/minchin.pelican.plugins.summary"
 __license__ = "GNU Affero General Public License v3"
 
-from .summary import *
+from pelican import signals
+
+from .summary import initialized, run_plugin, extract_summary
+
+
+def register():
+    signals.initialized.connect(initialized)
+    try:
+        signals.all_generators_finalized.connect(run_plugin)
+    except AttributeError:
+        # NOTE: This results in #314 so shouldn't really be relied on
+        # https://github.com/getpelican/pelican-plugins/issues/314
+        # Fixed in Pelican 3.6
+        signals.content_object_init.connect(extract_summary)

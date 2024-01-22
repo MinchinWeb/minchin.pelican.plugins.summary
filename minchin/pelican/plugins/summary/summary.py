@@ -12,7 +12,6 @@ import re
 import semantic_version
 
 from pelican import __version__ as pelican_version
-from pelican import signals
 from pelican.generators import ArticlesGenerator, PagesGenerator
 
 LOG_PREFIX = "[Summary]"
@@ -42,22 +41,24 @@ def _pelican_summary_as_metadata():
         return False
 
 
-def initialized(pelican):
+def initialized(pelican_instance):
     from pelican.settings import DEFAULT_CONFIG
 
     DEFAULT_CONFIG.setdefault("SUMMARY_BEGIN_MARKER", "<!-- PELICAN_BEGIN_SUMMARY -->")
     DEFAULT_CONFIG.setdefault("SUMMARY_END_MARKER", "<!-- PELICAN_END_SUMMARY -->")
     DEFAULT_CONFIG.setdefault("SUMMARY_USE_FIRST_PARAGRAPH", False)
-    if pelican:
-        pelican.settings.setdefault(
+    if pelican_instance:
+        pelican_instance.settings.setdefault(
             "SUMMARY_BEGIN_MARKER", "<!-- PELICAN_BEGIN_SUMMARY -->"
         )
-        pelican.settings.setdefault(
+        pelican_instance.settings.setdefault(
             "SUMMARY_END_MARKER", "<!-- PELICAN_END_SUMMARY -->"
         )
-        pelican.settings.setdefault("SUMMARY_USE_FIRST_PARAGRAPH", False)
+        pelican_instance.settings.setdefault("SUMMARY_USE_FIRST_PARAGRAPH", False)
 
-    logger.debug("%s initalized" % LOG_PREFIX)
+    logger.debug("%s initalized", LOG_PREFIX)
+
+    logger.debug("%s FORMATTED_FIELDS=%s", LOG_PREFIX, pelican_instance.settings["FORMATTED_FIELDS"])
 
 
 def extract_summary(instance):
@@ -119,6 +120,7 @@ def extract_summary(instance):
 
     instance._content = content
     if _pelican_summary_as_metadata():
+        # Pelican >= 4.0.0
         instance.metadata["summary"] = summary
     else:
         instance._summary = summary
@@ -126,6 +128,7 @@ def extract_summary(instance):
 
 
 def run_plugin(generators):
+    # Pelican >= 3.6
     for generator in generators:
         if isinstance(generator, ArticlesGenerator):
             for article in generator.articles:
@@ -133,13 +136,3 @@ def run_plugin(generators):
         elif isinstance(generator, PagesGenerator):
             for page in generator.pages:
                 extract_summary(page)
-
-
-def register():
-    signals.initialized.connect(initialized)
-    try:
-        signals.all_generators_finalized.connect(run_plugin)
-    except AttributeError:
-        # NOTE: This results in #314 so shouldn't really be relied on
-        # https://github.com/getpelican/pelican-plugins/issues/314
-        signals.content_object_init.connect(extract_summary)
