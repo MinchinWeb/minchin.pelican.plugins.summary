@@ -10,7 +10,7 @@ import pelican.settings
 try:
     from . import summary
 except ImportError:
-    from minchin.pelican.plugins.summary import summary
+    from minchin.pelican.plugins.summary import summary, register as summary_register
 
 # generate one paragraph, enclosed with <p>
 TEST_CONTENT = str(generate_lorem_ipsum(n=1))
@@ -23,7 +23,7 @@ class TestSummary(unittest.TestCase):
         pelican.settings.DEFAULT_CONFIG["SUMMARY_MAX_LENGTH"] = None
         pelican.settings.DEFAULT_CONFIG["SUMMARY_USE_FIRST_PARAGRAPH"] = False
 
-        summary.register()
+        summary_register()
         summary.initialized(None)
         self.page_kwargs = {
             "content": TEST_CONTENT,

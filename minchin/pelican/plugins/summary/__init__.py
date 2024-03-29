@@ -8,7 +8,7 @@ __license__ = "GNU Affero General Public License v3"
 
 from pelican import signals
 
-from .summary import initialized, run_plugin, extract_summary
+from .summary import extract_summary, initialized, run_plugin
 
 
 def register():
