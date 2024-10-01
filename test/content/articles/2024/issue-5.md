@@ -21,3 +21,5 @@ See [Issue #5](https://github.com/MinchinWeb/minchin.pelican.plugins.summary/iss
 
 C.f. [Issue #4](https://github.com/MinchinWeb/minchin.pelican.plugins.summary/issues/4) and
 [Pelican Issue #3265](https://github.com/getpelican/pelican/issues/3265).
+
+Fixed by Pelican 4.10.

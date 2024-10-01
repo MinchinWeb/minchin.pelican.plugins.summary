@@ -3,6 +3,9 @@ Summary Changelog
 
 This Changelog is for ``minchin.pelican.plugins.summary``.
 
+- :bug:`5 major` require Pelican 4.10 or later. Keeps internal link indicators
+  (like ``{filename}``) from leaking into summaries. C.f. `Pelican Issue #3265
+  <https://github.com/getpelican/pelican/issues/3265>`_.
 - :release`1.2.1 <2023-08-09>`
 - :bug:`-` blacklist ``autoloader`` v1.2.0
 - :release`1.2.0 <2022-06-10>`
