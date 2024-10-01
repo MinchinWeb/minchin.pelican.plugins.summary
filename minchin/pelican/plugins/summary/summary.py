@@ -58,7 +58,10 @@ def initialized(pelican_instance):
 
     logger.debug("%s initalized", LOG_PREFIX)
 
-    logger.debug("%s FORMATTED_FIELDS=%s", LOG_PREFIX, pelican_instance.settings["FORMATTED_FIELDS"])
+    try:
+        logger.debug("%s FORMATTED_FIELDS=%s", LOG_PREFIX, pelican_instance.settings["FORMATTED_FIELDS"])
+    except AttributeError:
+        logger.debug("%s FORMATTED_FIELDS unavailable. Did you pass a pelican instance?")
 
 
 def extract_summary(instance):
